@@ -9,11 +9,11 @@ var realValues = map[rune]int{'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 5
 var neighbours = map[rune][]rune{'I': {'V', 'X'}, 'V': {'I', 'X'}, 'X': {'I', 'V', 'L', 'C'}, 'L': {'X', 'C'}, 'C': {'X', 'L', 'D', 'M'}, 'D': {'C', 'M'}, 'M': {'C', 'D'}}
 var oneLess = map[rune]rune{'I': 'A', 'V': 'A', 'X': 'V', 'L': 'X', 'C': 'L', 'D': 'L', 'M': 'D'}
 
-func main() {
-
-	fmt.Println(romanToInt("CCCI"))
-
-}
+// func main() {
+//
+//	fmt.Println(romanToInt("CCCI"))
+//
+// }
 func romanToInt(s string) int {
 
 	sum := 0
