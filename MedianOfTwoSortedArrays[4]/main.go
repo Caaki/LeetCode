@@ -63,7 +63,7 @@ func findMedianSortedArrayBinarySearch(nums1 []int, nums2[]int) float64{
 
   var maxLeftY int
   var minRightY int
-  for (low <= high){
+  for low <= high{
   
     positionX:= (low+high) /2
     positionY:= (x+y+1)/2 - positionX
@@ -93,7 +93,7 @@ func findMedianSortedArrayBinarySearch(nums1 []int, nums2[]int) float64{
     }
 
     if maxLeftX <= minRightY && maxLeftY <= minRightX {
-      if (x+y)%2 ==0{
+      if (x+y)%2==0{
         return (math.Max(float64(maxLeftX),float64(maxLeftY))+math.Min(float64(minRightX),float64(minRightY)))/2
       }
       return math.Max(float64(maxLeftX),float64(maxLeftY))
