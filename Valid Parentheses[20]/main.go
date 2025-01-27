@@ -2,64 +2,86 @@ package main
 
 import (
 	"fmt"
-	"math/big"
-	"strconv"
+	"slices"
 )
-
-type ListNode struct {
-	Val  int
-	Next *ListNode
-}
-
-type LinkedList struct {
-	head *ListNode
-}
 
 func main() {
 
+	fmt.Println(isValid("[]{}(())"))
+
 }
 
-func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
-
-	stringVal := ""
-	for l1 != nil {
-		stringVal = strconv.Itoa(l1.Val) + stringVal
-		l1 = l1.Next
-	}
-	fmt.Println("String val is:", stringVal)
-	val1, _ := new(big.Int).SetString(stringVal, 10)
-	fmt.Println("Int64Val is: ", val1)
-	stringVal = ""
-	for l2 != nil {
-		stringVal = strconv.Itoa(l2.Val) + stringVal
-		l2 = l2.Next
-	}
-
-	val2, _ := new(big.Int).SetString(stringVal, 10)
-
-	newBigInt := big.NewInt(int64(43))
-	newBigInt.Add(val2, val1)
-	result := newBigInt.String()
-	list := LinkedList{}
-	for _, c := range result {
-		list.insertAtFront(int(c - '0'))
-	}
-	return list.head
+type Stack[T any] struct {
+	stack []T
 }
 
-func (list *LinkedList) insertAtFront(data int) {
-	if list.head == nil {
-		newNode := &ListNode{
-			Val:  data,
-			Next: nil,
+func MakeStack[T any](size ...int) Stack[T] {
+
+	if len(size) > 0 {
+		return Stack[T]{
+			stack: make([]T, 0, size[0]),
 		}
-		list.head = newNode
-		return
 	}
-	newNode := &ListNode{
-		Val:  data,
-		Next: list.head,
-	}
-	list.head = newNode
 
+	return Stack[T]{
+		stack: make([]T, 0),
+	}
+}
+
+func (stack *Stack[T]) Push(element T) {
+	stack.stack = append(stack.stack, element)
+}
+
+func (stack *Stack[T]) Pop() (element T) {
+	stackLen := len(stack.stack) - 1
+	if stackLen >= 0 {
+		element = stack.stack[stackLen]
+		stack.stack = slices.Delete(stack.stack, stackLen, stackLen+1)
+		return element
+	}
+	var zeroValue T
+	return zeroValue
+}
+
+func (stack *Stack[T]) Size() int {
+
+	return len(stack.stack)
+}
+
+func isValid(s string) bool {
+	stack := MakeStack[rune]()
+
+	for _, v := range s {
+		if isOpened(v) {
+			stack.Push(v)
+		} else {
+			if stack.Size() < 0 {
+				return false
+			}
+			if stack.Pop() != getNeededClosed(v) {
+				return false
+			}
+		}
+	}
+	if stack.Size() > 0 {
+		return false
+	}
+	return true
+}
+func getNeededClosed(s rune) rune {
+	if s == '}' {
+		return '{'
+	}
+	if s == ')' {
+		return '('
+	}
+	return '['
+
+}
+
+func isOpened(s rune) bool {
+	if s == '(' || s == '{' || s == '[' {
+		return true
+	}
+	return false
 }
