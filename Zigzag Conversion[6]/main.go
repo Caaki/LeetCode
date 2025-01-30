@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	fmt.Println(convert("PAYPALISHIRING", 4))
+	fmt.Println(convert("PAYPALISHIRING", 3))
 
 	//fmt.Println(calculateNeddedCol(15, 5))
 }
@@ -51,32 +51,35 @@ func convert(s string, numRows int) string {
 			}
 		}
 	}
-	toReturn := ""
-
+	toReturn := make([]rune, len(s), len(s))
+	current := 0
 	for i := 0; i < len(matrix); i++ {
 		if i == 0 || i == len(matrix)-1 {
 			for j := 0; j < len(matrix[i]); j += numRows - 1 {
 				if matrix[i][j] != 0 {
-					toReturn += string(matrix[i][j])
+					toReturn[current] = matrix[i][j]
+					current++
 				}
 			}
 		} else {
 			for j := 0; j < len(matrix[i]); {
 				if matrix[i][j] != 0 {
-					toReturn += string(matrix[i][j])
+					toReturn[current] = matrix[i][j]
+					current++
 				}
 				j += numRows - 1 - i
 				if j < len(matrix[i]) {
 					if matrix[i][j] != 0 {
-						toReturn += string(matrix[i][j])
+						toReturn[current] = matrix[i][j]
+						current++
 					}
 					j += i
 				}
 			}
 		}
 	}
-
-	return toReturn
+	fmt.Println(len(toReturn))
+	return string(toReturn)
 
 }
 
