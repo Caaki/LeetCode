@@ -6,8 +6,9 @@ import (
 )
 
 func main() {
-	fmt.Println(convert("ABCD", 2))
+	fmt.Println(convert("PAYPALISHIRING", 4))
 
+	//fmt.Println(calculateNeddedCol(15, 5))
 }
 
 func convert(s string, numRows int) string {
@@ -51,10 +52,26 @@ func convert(s string, numRows int) string {
 		}
 	}
 	toReturn := ""
+
 	for i := 0; i < len(matrix); i++ {
-		for j := 0; j < len(matrix[i]); j++ {
-			if matrix[i][j] != 0 {
-				toReturn += string(matrix[i][j])
+		if i == 0 || i == len(matrix)-1 {
+			for j := 0; j < len(matrix[i]); j += numRows - 1 {
+				if matrix[i][j] != 0 {
+					toReturn += string(matrix[i][j])
+				}
+			}
+		} else {
+			for j := 0; j < len(matrix[i]); {
+				if matrix[i][j] != 0 {
+					toReturn += string(matrix[i][j])
+				}
+				j += numRows - 1 - i
+				if j < len(matrix[i]) {
+					if matrix[i][j] != 0 {
+						toReturn += string(matrix[i][j])
+					}
+					j += i
+				}
 			}
 		}
 	}
