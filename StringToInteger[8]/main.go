@@ -5,6 +5,7 @@ import (
 	"math"
 )
 
+// For memory efficiancy i manualy converted runes to their int representation
 // + == 43
 // " " == 32
 // - == 44
@@ -13,7 +14,6 @@ import (
 func main() {
 	test1 := "-2147483647"
 	fmt.Println(myAtoi(test1))
-
 }
 
 func myAtoi(s string) int {
@@ -47,7 +47,6 @@ func myAtoi(s string) int {
 			if c > 57 || c < 48 {
 				break
 			}
-
 			if i > 10 {
 				if neg {
 					return math.MinInt32
@@ -75,6 +74,5 @@ func myAtoi(s string) int {
 	if neg {
 		return -(int(n))
 	}
-
 	return int(n)
 }
