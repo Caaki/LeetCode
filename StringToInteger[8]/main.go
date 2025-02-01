@@ -11,7 +11,6 @@ import (
 // 1 == 49
 // 9 == 57
 func main() {
-	fmt.Println(math.MaxInt32)
 	test1 := "-2147483647"
 	fmt.Println(myAtoi(test1))
 
@@ -30,9 +29,9 @@ func myAtoi(s string) int {
 				}
 				n = n*10 + c - 48
 				st = true
-				if n!=0{
-          i++
-        }
+				if n != 0 {
+					i++
+				}
 			}
 			if c == 32 {
 				continue
@@ -51,32 +50,31 @@ func myAtoi(s string) int {
 
 			if i > 10 {
 				if neg {
-          return math.MinInt32
+					return math.MinInt32
 				} else {
-          return math.MaxInt32
+					return math.MaxInt32
 				}
 			}
 			if i >= 9 {
 				if (int(n)*10)+int(c)-48 > math.MaxInt32 {
 					if neg {
-            fmt.Printf("[%d] [%d] [%d]",n,int(n)*10, int(c)-48) 
 						return math.MinInt32
 					}
 					return math.MaxInt32
 				}
 				n = n*10 + c - 48
-        i++
+				i++
 				continue
 			}
 			n = n*10 + c - 48
-			if n!=0{
-          i++
-        }
+			if n != 0 {
+				i++
+			}
 		}
 	}
 	if neg {
 		return -(int(n))
 	}
-  
+
 	return int(n)
 }
