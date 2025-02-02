@@ -21,17 +21,18 @@ func isAnagram(s string, t string) bool {
 	return true
 
 }
+
 func isAnagram2(s string, t string) bool {
 	if len(s) != len(t) {
 		return false
 	}
-	m1 := map[byte]int16{}
+	m1 := map[rune]int16{}
 
-	for _, c := range []byte(s) {
+	for _, c := range s {
 		m1[c]++
 	}
 
-	for _, c := range []byte(t) {
+	for _, c := range t {
 		m1[c]--
 		if m1[c] < 0 {
 			return false
