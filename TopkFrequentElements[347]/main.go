@@ -9,11 +9,11 @@ func topKFrequent(nums []int, k int) []int {
 		return nums
 	}
 
-	valuesAndCount := make(map[int]int, 0)
+	valuesAndCount := make(map[int16]int8, 0)
 	for _, n := range nums {
-		valuesAndCount[n]++
+		valuesAndCount[int16(n)]++
 	}
-	count := make([][]int, len(nums)+1)
+	count := make([][]int16, len(nums)+1)
 
 	for k, v := range valuesAndCount {
 		count[v] = append(count[v], k)
@@ -23,7 +23,7 @@ func topKFrequent(nums []int, k int) []int {
 	for i := len(count) - 1; i >= 0; i-- {
 		if len(count[i]) > 0 {
 			for _, num := range count[i] {
-				returnValues = append(returnValues, num)
+				returnValues = append(returnValues, int(num))
 				k--
 				if k == 0 {
 					return returnValues
