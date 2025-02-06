@@ -1,18 +1,17 @@
 package main
-
-
 func main(){
 
 }
 
 func twoSum(nums []int, target int) []int {
-    values :=make(map[int16]int16) 
-    defer clear(values) 
-    for index,value:=range nums {
-        get,ok:=values[int16(target-value)] 
-        if ok {
-            return []int{int(get),index}
+    values :=make(map[int16]int16)
+    for i,v:=range nums {
+    dif := int16(target - v)
+
+        if r,ok:=values[dif] ; ok {
+            return []int{int(r),i}
             } 
-    values[int16(value)]=int16(index)}
+
+    values[int16(v)]=int16(i)}
     return nil
 }
