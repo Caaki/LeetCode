@@ -1,8 +1,12 @@
 package main
 
+import (
+	"fmt"
+)
+
 type Values struct {
-	Lower  []int16
-	Higher []int16
+	Lower  []int
+	Higher []int
 }
 
 type Values2 struct {
@@ -11,44 +15,37 @@ type Values2 struct {
 }
 
 func main() {
-
+	fmt.Println(longestConsecutive([]int{100, 2, 6, 3, 1, 5, 4}))
 }
 
 func longestConsecutive(nums []int) int {
-	values := make(map[int16]*Values)
+	values := make(map[int]*Values2)
 	longest := 0
 	for _, num := range nums {
-		if _, ok := values[int16(num)]; ok {
+		if _, ok := values[num]; ok {
 			continue
 		}
-		val := Values{Higher: []int16{}, Lower: []int16{}}
-		values[int16(num)] = &val
-		getFirst(values, int16(num), int16(num))
-		getLast(values, int16(num), int16(num))
-		if longest < len(values[int16(num)].Higher)+len(values[int16(num)].Lower)+1 {
-			longest = len(values[int16(num)].Higher) + len(values[int16(num)].Lower) + 1
+		values[num] = &Values2{num, num}
+		getFirst(values, num, num)
+		getLast(values, num, num)
+		if longest < int(values[num].Highest-values[num].Lowest)+1 {
+			longest = int(values[num].Highest-values[num].Lowest) + 1
 		}
 	}
 	return longest
 }
 
-func getFirst(values map[int16]*Values, num int16, appendTo int16) {
+func getFirst(values map[int]*Values2, num int, appendTo int) {
 	if _, ok := values[num-1]; ok {
-		values[appendTo].Lower = append([]int16{num - 1}, values[appendTo].Lower...)
-		if len(values[num-1].Lower) > 0 {
-			values[appendTo].Lower = append(values[num-1].Lower, values[appendTo].Lower...)
-		}
-
-		getFirst(values, values[appendTo].Lower[0], appendTo)
+		values[appendTo].Lowest = values[num-1].Lowest
+		getFirst(values, values[appendTo].Lowest, appendTo)
 	}
 }
 
-func getLast(values map[int16]*Values, num int16, appendTo int16) {
+func getLast(values map[int]*Values2, num int, appendTo int) {
+
 	if _, ok := values[num+1]; ok {
-		values[appendTo].Higher = append(values[appendTo].Higher, num+1)
-		if len(values[num+1].Higher) > 0 {
-			values[appendTo].Higher = append(values[appendTo].Higher, values[num+1].Higher...)
-		}
-		getLast(values, values[appendTo].Higher[len(values[appendTo].Higher)-1], appendTo)
+		values[appendTo].Highest = values[num+1].Highest
+		getLast(values, values[appendTo].Highest, appendTo)
 	}
 }
