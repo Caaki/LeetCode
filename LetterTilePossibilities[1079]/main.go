@@ -1,31 +1,34 @@
 package main
 
-func main(){}
+import (
+  "fmt"
+)
+func main(){
 
-
-func factorial (n int,values map[int]int) int{
-  if n ==1{
-    return 1
-  }
-  if val,ok:= values[n] ; ok{
-  return values[val]
+  fmt.Println(numTilePossibilities("AAABBC"))
 }
 
-  factorialOfNumber:= n * factorial(n-1, values)
-  values[n] = factorialOfNumber
-  return factorialOfNumber
+func numTilePossibilities(tiles string) int {
+  caracters:= make(map[rune]int,0)
+
+  for _,v := range tiles{
+    caracters[v]++
+  }
+
+  return getCombinationNumbers(caracters) 
 }
 
-func numTilePossilities(tiles string) int {
-  caracters := make(map[rune]int,0)
-
-  for _,v := range tiles {
-    caracters[v]+=1
+func getCombinationNumbers(caracters map[rune]int) int{
+  result:=0
+  for k,v:= range caracters{
+    if v > 0{
+      caracters[k]--
+      result++
+      result+=getCombinationNumbers(caracters)
+      caracters[k]++
+    }
   }
-  
-  facNumbs:= make(map[int]int,0)
-  sum :=0
-  for i := 1 ; i <= len(tiles); i++{
-    
-  }
+  return result
 }
+
+
