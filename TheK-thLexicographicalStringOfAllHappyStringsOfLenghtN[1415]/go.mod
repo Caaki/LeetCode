@@ -1,0 +1,3 @@
+module theKLexicographicalStringOfAllHappyStringsOfLenghtN
+
+go 1.23rc1
