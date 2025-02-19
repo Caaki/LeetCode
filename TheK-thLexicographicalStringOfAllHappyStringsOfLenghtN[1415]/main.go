@@ -19,6 +19,9 @@ func getHappyString(n int, k int) string {
 }
 
 func getLetterCombination(results *[]string, current string, n int, k int) {
+	if len(*results) == k {
+		return
+	}
 	if len(current) == n {
 		*results = append(*results, current)
 		return
