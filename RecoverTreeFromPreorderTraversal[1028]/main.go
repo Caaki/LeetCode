@@ -12,9 +12,9 @@ type TreeNode struct {
 }
 
 func main() {
-	//str := "1234"
-	//fmt.Println(myAtoi(&str))
-	//fmt.Println(str)
+	str := "1234"
+	fmt.Println(myAtoi(&str))
+	fmt.Println(str)
 
 	node := recoverFromPreorder("1-401--349---90--88")
 	node.printTree()
