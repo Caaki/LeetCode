@@ -1,0 +1,3 @@
+module constructBinaryTreeFromPreordeAndPostorderTraversal
+
+go 1.22.5
