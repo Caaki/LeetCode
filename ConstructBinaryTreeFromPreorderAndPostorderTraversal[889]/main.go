@@ -14,13 +14,8 @@ func constructFromPrePost(preorder []int, postorder []int) *TreeNode {
   if len(preorder) <=3{
     return lessThan3(&root,preorder,postorder)
   }
-  if checkIfSame(preorder,postorder){
-
-    return allSame(&root,preorder)
-  }
 
   recursiveAdd(&root,preorder,postorder)
-
   return &root
 }
 
@@ -72,20 +67,3 @@ func recursiveAdd(root *TreeNode, preorder []int, postorder []int){
   }
 }
 
-func checkIfSame(preorder []int, postorder[]int) bool{
-  for i:=0; i<len(preorder); i++{
-    if preorder[i] != postorder[len(postorder)-1-i]{
-      return false
-    }
-  }
-  return true
-}
-
-func allSame(root *TreeNode, preorder []int) *TreeNode{
-  headNode:= root
-  for i:=1; i< len(preorder) ;i++{
-    root.Left= &TreeNode{Val:preorder[i]}
-    root = root.Left
-  }
-  return headNode
-}
