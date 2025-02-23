@@ -1,6 +1,13 @@
 package main
 
-func main(){}
+import(
+  "fmt"
+)
+func main(){
+  preorder:= []int{4,1,3,5,2}
+  postorder:=[]int{5,2,3,1,4}
+  constructFromPrePost(preorder,postorder).printTree()
+}
 
 type TreeNode struct{
   Val int
@@ -63,5 +70,16 @@ func recursiveAdd(root *TreeNode, preorder []int, postorder []int){
   }
   if len(rightSide)>1{
   recursiveAdd(root.Right, preorder[count+2:],postorder[count+1:len(postorder)-1])
+  }
+}
+
+
+func (root *TreeNode)printTree(){
+  fmt.Println(root.Val)
+  if root.Left!=nil{
+    root.Left.printTree()
+  }
+  if root.Right != nil{
+    root.Right.printTree()
   }
 }
