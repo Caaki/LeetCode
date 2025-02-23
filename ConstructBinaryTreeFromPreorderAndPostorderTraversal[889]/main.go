@@ -1,6 +1,5 @@
 package main
 
-
 func main(){}
 
 type TreeNode struct{
@@ -66,4 +65,3 @@ func recursiveAdd(root *TreeNode, preorder []int, postorder []int){
   recursiveAdd(root.Right, preorder[count+2:],postorder[count+1:len(postorder)-1])
   }
 }
-
