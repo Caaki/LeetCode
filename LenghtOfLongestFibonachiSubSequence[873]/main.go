@@ -1,6 +1,10 @@
 package main
 
-func main() {}
+import "fmt"
+
+func main() {
+	fmt.Print(lenLongestFibSubSeq([]int{2, 4, 7, 8, 9, 10, 14, 15, 18, 23, 32, 50}))
+}
 
 func lenLongestFibSubSeq(arr []int) int {
 	longest := 0
