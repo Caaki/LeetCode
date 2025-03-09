@@ -1,7 +1,12 @@
 package main 
 
+import(
+  "fmt"
+)
 
-func main (){}
+func main (){
+  fmt.Println(numberOfLaternatingGroups([]int{0,1,0,1,0,1,0,0,1,0,1},3))
+}
 
 
 func numberOfLaternatingGroups(colors []int, k int) int{
