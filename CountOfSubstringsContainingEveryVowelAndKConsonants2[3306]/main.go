@@ -1,5 +1,9 @@
 package main
 
+import(
+  "fmt"
+)
+
 func main (){}
 
 var volvs =[]bool{
@@ -19,9 +23,9 @@ var volvs =[]bool{
 //Max=11111
 //l=0
 
-func countOfSubstrings(word string, k int) int64 {
+func countOfSubstrings2(word string, k int) int64 {
   nVolvs := make([]bool, len(volvs))
-  copy(nVolvs, volvs)
+  
   l:=0
   r:=1
   sum:=0
