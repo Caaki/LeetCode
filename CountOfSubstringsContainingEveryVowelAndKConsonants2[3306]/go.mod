@@ -1,0 +1,3 @@
+module countOfSubstringsContainingEveryVowlAndKConsonants
+
+go 1.22.5
