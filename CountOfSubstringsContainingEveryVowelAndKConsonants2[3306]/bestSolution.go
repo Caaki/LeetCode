@@ -4,7 +4,7 @@ import(
   "strings"
 )
 
-func countOfSubstrings(word string,k int) int64{
+func CountOfSubstrings(word string,k int) int64{
     
   return count2(word,k) - count2(word,k+1)
 }
