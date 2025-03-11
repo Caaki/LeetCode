@@ -43,14 +43,7 @@ func numberOfSubstrings(s string) int {
   if r==-1{
     return sum
   }
-  sum+=len(s)-(r-l)
-  if strings.ContainsRune("abc",rune(s[l])){
-    abc[rNum(s[l])]-=1
-    if abc[rNum(s[l])]==0{
-      abc[3]-=1
-    }
-  }
-  l++
+
   for  r<len(s){
     if abc[3]==3{
       sum+=len(s)-r
