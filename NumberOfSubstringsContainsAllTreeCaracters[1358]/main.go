@@ -9,20 +9,33 @@ func main(){
   fmt.Println(numberOfSubstrings("abcabc"))
 }
 
+func rNum(r byte) int8{
+  if r ==97{
+    return 0
+  }
+  if r==98{
+    return 1
+  }
+  return 2
+
+}
 
 func numberOfSubstrings(s string) int {
-  abc:=make(map[byte]int,0)
+  abc:=make([]int16,4)
   sum:=0
   l:=-1
   r:=-1
   for i:=0; i < len(s);i++{
     if strings.ContainsRune("abc",rune(s[i])){
-      if len(abc)==0{
+      if abc[3]==0{
         l=i
       }
-      abc[s[i]]+=1
+      if abc[rNum(s[i])]==0{
+        abc[3]+=1
+      }
+      abc[rNum(s[i])]+=1
     }
-    if len(abc)==3{
+    if abc[3]==3{
       r=i
       break
     }
@@ -30,26 +43,31 @@ func numberOfSubstrings(s string) int {
   if r==-1{
     return sum
   }
-  started:=false
+  sum+=len(s)-(r-l)
+  if strings.ContainsRune("abc",rune(s[l])){
+    abc[rNum(s[l])]-=1
+    if abc[rNum(s[l])]==0{
+      abc[3]-=1
+    }
+  }
+  l++
   for  r<len(s){
-    if len(abc)==3{
-      if !started{
-        sum+=len(s)-(r-l)
-        started=true
-      }else{
-        sum+=len(s)-r
-      }
+    if abc[3]==3{
+      sum+=len(s)-r
       if strings.ContainsRune("abc",rune(s[l])){
-        abc[s[l]]-=1
-        if abc[s[l]]==0{
-          delete(abc,s[l])
+        abc[rNum(s[l])]-=1
+        if abc[rNum(s[l])]==0{
+          abc[3]-=1
         }
       }
       l++
       continue
     }
     if r<len(s)-1 && strings.ContainsRune("abc",rune(s[r+1])){
-      abc[s[r+1]]+=1
+      if abc[rNum(s[r+1])]==0{
+        abc[3]+=1
+      }
+      abc[rNum(s[r+1])]+=1
     }
     r++
 
