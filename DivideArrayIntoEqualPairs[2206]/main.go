@@ -16,7 +16,7 @@ func divideArray(nums []int)bool{
     }
   }
 
-  allVals:=make([]int16,maxVal+1)
+  allVals:=make([]uint8,maxVal+1)
   for _,v:=range nums{
     allVals[v]++
   }
