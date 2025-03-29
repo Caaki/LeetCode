@@ -1,32 +1,33 @@
 package main
 
-import "slices"
+import (
+	"container/heap"
+	"slices"
+)
 
 func main() {}
 
-type Stack [][2]int
+type cell struct {
+	i, j int
+	val  int
+}
+type minHeap []cell
 
-func (s Stack) Add(a [2]int) {
-	s = append(s, a)
+func (h minHeap) Len() int           { return len(h) }
+func (h minHeap) Less(i, j int) bool { return h[i].val < h[j].val }
+func (h minHeap) Swap(i, j int)      { h[i], h[j] = h[j], h[i] }
+
+func (h *minHeap) Push(x interface{}) {
+	*h = append(*h, x.(cell))
 }
 
-func (s Stack) Pop() [2]int {
-	if len(s) < 1 {
-		return [2]int{}
-	}
-	val := s[len(s)-1]
-	s = s[:len(s)-1]
-	return [2]int{val[0], val[1]}
+func (h *minHeap) Pop() interface{} {
+	old := *h
+	n := len(old)
+	x := old[n-1]
+	*h = old[0 : n-1]
+	return x
 }
-
-func (s Stack) Peek() [2]int {
-	if len(s) < 1 {
-		return [2]int{}
-	}
-	val := s[len(s)-1]
-	return [2]int{val[0], val[1]}
-}
-
 func maxPoints(grid [][]int, queries []int) []int {
 	qSorted := append([]int{}, queries...)
 	slices.Sort(qSorted)
@@ -37,26 +38,27 @@ func maxPoints(grid [][]int, queries []int) []int {
 	}
 
 	answers := make([]int, len(queries))
-	var toVisit = Stack{}
-	toVisit.Add([2]int{0, 0})
-	visited := make(map[[2]int]bool, 0)
+	var toVisit = &minHeap{}
+	heap.Init(toVisit)
+	heap.Push(toVisit, cell{i: 0, j: 0, val: grid[0][0]})
+	visited := make(map[cell]bool, 0)
 
 	count := 0
 	for _, q := range qSorted {
-		for len(toVisit) > 0 && grid[toVisit[0][0]][toVisit[0][1]] < q {
-			if _, ok := visited[toVisit.Peek()]; ok {
-				toVisit.Pop()
-				continue
+		for toVisit.Len() > 0 && grid[(*toVisit)[0].i][(*toVisit)[0].j] < q {
+
+			cordinates := heap.Pop(toVisit).(cell)
+			if _, ok := visited[cordinates]; !ok {
+				count++
 			}
-			count++
-			cordinates := toVisit.Pop()
+
+			if cordinates.i+1 < len(grid) && !visited[cordinates] {
+				heap.Push(toVisit, cell{i: cordinates.i + 1, j: cordinates.j, val: grid[cordinates.i+1][cordinates.j]})
+			}
+			if cordinates.j+1 < len(grid[0]) && !visited[cordinates] {
+				heap.Push(toVisit, cell{i: cordinates.i, j: cordinates.j + 1, val: grid[cordinates.i][cordinates.j+1]})
+			}
 			visited[cordinates] = true
-			if cordinates[0] < len(grid) && !visited[[2]int{cordinates[0] + 1, cordinates[1]}] {
-				toVisit.Add([2]int{cordinates[0] + 1, cordinates[1]})
-			}
-			if cordinates[0] < len(grid[0]) && !visited[[2]int{cordinates[0], cordinates[1] + 1}] {
-				toVisit.Add([2]int{cordinates[0], cordinates[1] + 1})
-			}
 		}
 		answers[order[q]] = count
 	}
