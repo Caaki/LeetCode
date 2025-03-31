@@ -1,6 +1,8 @@
 package main
 
-import "sort"
+import (
+	"sort"
+)
 
 func main() {}
 
@@ -38,6 +40,29 @@ func partitionLabels(s string) []int {
 	}
 	answers := make([]int, 0)
 	sort.Sort(sVals)
-
-	return []int{}
+	l := -1
+	r := -1
+	for _, v := range sVals {
+		if v.start == -1 {
+			continue
+		}
+		if l == -1 {
+			l = v.start
+			r = v.end
+			continue
+		}
+		if v.start > r {
+			answers = append(answers, r-l+1)
+			l = v.start
+			r = v.end
+			continue
+		}
+		if v.end > r {
+			r = v.end
+		}
+	}
+	if l != -1 {
+		answers = append(answers, r-l+1)
+	}
+	return answers
 }
