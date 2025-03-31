@@ -1,14 +1,17 @@
 package main
 
 import (
+	"fmt"
 	"sort"
 )
 
-func main() {}
+func main() {
+	fmt.Print(partitionLabels("ababcbacadefegdehijhklij"))
+}
 
 type Val struct {
-	start int
-	end   int
+	start int16
+	end   int16
 }
 
 type sortByStart []Val
@@ -32,16 +35,16 @@ func partitionLabels(s string) []int {
 	}
 	for i, v := range s {
 		if sVals[v-'a'].start == -1 {
-			sVals[v-'a'].start = i
-			sVals[v-'a'].end = i
+			sVals[v-'a'].start = int16(i)
+			sVals[v-'a'].end = int16(i)
 		} else {
-			sVals[v-'a'].end = i
+			sVals[v-'a'].end = int16(i)
 		}
 	}
 	answers := make([]int, 0)
 	sort.Sort(sVals)
-	l := -1
-	r := -1
+	l := int16(-1)
+	r := int16(-1)
 	for _, v := range sVals {
 		if v.start == -1 {
 			continue
@@ -52,7 +55,7 @@ func partitionLabels(s string) []int {
 			continue
 		}
 		if v.start > r {
-			answers = append(answers, r-l+1)
+			answers = append(answers, int(r-l+1))
 			l = v.start
 			r = v.end
 			continue
@@ -62,7 +65,7 @@ func partitionLabels(s string) []int {
 		}
 	}
 	if l != -1 {
-		answers = append(answers, r-l+1)
+		answers = append(answers, int(r-l+1))
 	}
 	return answers
 }
