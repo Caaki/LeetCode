@@ -1,7 +1,9 @@
 package main
 
-func main() {
+import "fmt"
 
+func main() {
+	fmt.Println(canPartition([]int{1, 5, 11, 5}))
 }
 
 func canPartition(nums []int) bool {
