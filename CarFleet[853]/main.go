@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"sort"
 )
 
@@ -34,10 +33,6 @@ func carFleet(target int, position []int, speed []int) int {
 	}
 	c := CarArray(cars)
 	sort.Sort(c)
-	for _, v := range cars {
-		fmt.Print(*v)
-	}
-	fmt.Println()
 
 	fleets := 0
 	for len(cars) > 0 {
@@ -60,10 +55,6 @@ func carFleet(target int, position []int, speed []int) int {
 			}
 		}
 
-		for _, v := range cars {
-			fmt.Print(*v)
-		}
-		fmt.Println()
 		if atEnd {
 			for len(cars) > 0 && cars[0].pos >= target {
 				end = 0
@@ -80,11 +71,6 @@ func carFleet(target int, position []int, speed []int) int {
 				cars = cars[end:]
 			}
 
-			for _, v := range cars {
-				fmt.Print(*v)
-			}
-			fmt.Println()
-			fmt.Println(fleets)
 		}
 	}
 
