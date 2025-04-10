@@ -2,54 +2,92 @@ package main
 
 import (
 	"fmt"
+	"sort"
 )
 
-func main() {
-	carFleet(12, []int{4, 1, 0, 7}, []int{2, 2, 1, 1})
+type Car struct {
+	pos   int
+	speed int
+	same  bool
+}
+
+type CarArray []*Car
+
+func (c CarArray) Less(i, j int) bool {
+	return c[i].pos > c[j].pos
+}
+
+func (c CarArray) Len() int {
+	return len(c)
+}
+func (c CarArray) Swap(i, j int) {
+	c[i], c[j] = c[j], c[i]
 }
 
 func carFleet(target int, position []int, speed []int) int {
-	fmt.Println(position, speed)
-	quickSort(position, speed, 0, len(position)-1)
-	fmt.Println(position, speed)
-	return 0
-}
+	end := 0
 
-func quickSort(position []int, speed []int, start int, end int) {
+	cars := make([]*Car, len(position))
 
-	if end <= start {
-		return
+	for i, v := range speed {
+		cars[i] = &Car{pos: position[i], speed: v}
 	}
+	c := CarArray(cars)
+	sort.Sort(c)
+	for _, v := range cars {
+		fmt.Print(*v)
+	}
+	fmt.Println()
 
-	pivot := partition(position, speed, start, end)
-	quickSort(position, speed, start, pivot-1)
-	quickSort(position, speed, pivot+1, end)
-}
+	fleets := 0
+	for len(cars) > 0 {
+		atEnd := false
+		for i := 0; i < len(cars); i++ {
+			cars[i].pos += cars[i].speed
+			if cars[i].pos >= target {
+				atEnd = true
+				continue
+			}
+			if i != 0 {
+				if cars[i-1].pos <= cars[i].pos {
+					cars[i].pos = cars[i-1].pos
+					if cars[i].speed < cars[i-1].speed {
+						cars[i-1].speed = cars[i].speed
+					} else {
+						cars[i].speed = cars[i-1].speed
+					}
+				}
+			}
+		}
 
-func partition(position []int, speed []int, start int, end int) int {
-	pivot := position[end]
-	i := start - 1
-	temp := 0
-	for j := start; j <= end-1; j++ {
-		if position[j] < pivot {
-			i++
-			temp = position[i]
-			position[i] = position[j]
-			position[j] = temp
+		for _, v := range cars {
+			fmt.Print(*v)
+		}
+		fmt.Println()
+		if atEnd {
+			for len(cars) > 0 && cars[0].pos >= target {
+				end = 0
+				first := cars[0].pos
+				for _, v := range cars {
+					if first != target && (v.pos != first || v.speed != cars[0].speed) && v.pos > target {
+						fleets++
+					}
+					if v.pos >= target {
+						end++
+					}
+				}
+				fleets++
+				cars = cars[end:]
+			}
 
-			temp = speed[i]
-			speed[i] = speed[j]
-			speed[j] = temp
+			for _, v := range cars {
+				fmt.Print(*v)
+			}
+			fmt.Println()
+			fmt.Println(fleets)
 		}
 	}
-	i++
-	temp = position[i]
-	position[i] = position[end]
-	position[end] = temp
 
-	temp = speed[i]
-	speed[i] = speed[end]
-	speed[end] = temp
+	return fleets
 
-	return i
 }
