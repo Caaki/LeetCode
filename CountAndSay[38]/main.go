@@ -1,8 +1,13 @@
 package main
 
 import (
+	"fmt"
 	"strconv"
 )
+
+func main() {
+	fmt.Println(countAndSay(7))
+}
 
 func countAndSay(n int) string {
 	if n == 1 {
