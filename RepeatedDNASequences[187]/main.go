@@ -1,7 +1,7 @@
 package main
 
 func findRepeatedDnaSequences(s string) []string {
-	values := make(map[string]int, 0)
+	values := make(map[string]int16, 0)
 
 	if len(s) < 11 {
 		return []string{}
