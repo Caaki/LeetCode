@@ -4,39 +4,29 @@ func main() {}
 
 func minDominoRotations(tops []int, bottoms []int) int {
 
-	values := make(map[int8]int, 0)
+	values := make([]int, 7)
 
+	maxTops := make([]int, 7)
+	maxBottoms := make([]int, 7)
 	for i := 0; i < len(tops); i++ {
 		if tops[i] == bottoms[i] {
-			values[int8(tops[i])]++
+			values[tops[i]]++
 		} else {
-			values[int8(tops[i])]++
-			values[int8(bottoms[i])]++
+			values[tops[i]]++
+			values[bottoms[i]]++
 		}
+		maxTops[tops[i]]++
+		maxBottoms[bottoms[i]]++
 	}
-
 	none := true
-	possible := make([]int, 7)
-	needed := len(tops)
-	for k, v := range values {
-		if v >= needed {
-			possible[k] = v
+	for _, v := range values {
+		if v >= len(tops) {
 			none = false
+			break
 		}
 	}
 	if none {
 		return -1
-	}
-
-	maxTops := make(map[int8]int, 0)
-	maxBottoms := make(map[int8]int, 0)
-	for i := 0; i < len(tops); i++ {
-		if possible[tops[i]] > 0 {
-			maxTops[int8(tops[i])]++
-		}
-		if possible[bottoms[i]] > 0 {
-			maxBottoms[int8(bottoms[i])]++
-		}
 	}
 
 	maxVal := 0
