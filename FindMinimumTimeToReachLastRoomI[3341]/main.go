@@ -27,7 +27,7 @@ func minTimeToReach(moveTime [][]int) int {
 	heap.Push(minHeap, [3]int{0, 0, 0})
 
 	for minHeap.Len() > 0 {
-		element := minHeap.Pop().([3]int)
+		element := heap.Pop(minHeap).([3]int)
 		w, i, j := element[0], element[1], element[2]
 		for _, v := range [][2]int{{1, 0}, {-1, 0}, {0, 1}, {0, -1}} {
 			ni := i + v[0]
