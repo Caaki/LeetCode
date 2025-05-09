@@ -1,7 +1,5 @@
 package main
 
-import "fmt"
-
 func main() {}
 
 type PosVal struct {
@@ -10,68 +8,74 @@ type PosVal struct {
 }
 
 func largestRectangleArea(heights []int) int {
-	maxVal := 0
-	pStack := PosValStack{values: []PosVal{{Pos: 0, Val: heights[0]}}}
-	pStack.Push(PosVal{0, heights[0]})
-	i := 1
-	element := pStack.Peek()
-	for i < len(heights) {
-		if pStack.Len() <= 0 || element.Val < heights[i] {
-			pStack.Push(PosVal{Pos: i, Val: heights[i]})
-			i++
-			element = pStack.Peek()
-			continue
-		}
-		if element.Val == heights[i] {
+	maxVal := heights[0]
+
+	stack := Stack{s: []PosVal{{Val: maxVal, Pos: 0}}}
+	current := stack.Peek()
+	for i := 1; i < len(heights); {
+		if current.Val == heights[i] {
 			i++
 			continue
 		}
-		lastPosition := element.Pos
-		for pStack.Len() > 0 && element.Val >= heights[i] {
-			fmt.Println(pStack, element, heights[i], i)
-			temp := element.Val * (i - element.Pos)
-			if temp > maxVal {
+		if current.Val < heights[i] {
+			current = PosVal{Pos: i, Val: heights[i]}
+
+			stack.Push(current)
+			i++
+			continue
+		}
+		lastPos := current.Pos
+		for stack.Len() > 0 && current.Val > heights[i] {
+			lastPos = current.Pos
+			temp := current.Val * (i - current.Pos)
+			if maxVal < temp {
 				maxVal = temp
 			}
-			pStack.Pop()
-			element = pStack.Peek()
+			stack.Pop()
+			current = stack.Peek()
 		}
-		pStack.Push(PosVal{Pos: lastPosition, Val: heights[i]})
-		element = pStack.Peek()
+		stack.Push(PosVal{Pos: lastPos, Val: heights[i]})
+		current = stack.Peek()
+		i++
 
 	}
 
-	for pStack.Len() > 0 {
-		element = pStack.Peek()
-		temp := element.Val * (len(heights) - element.Pos)
-		if temp > maxVal {
+	for current.Pos != -1 {
+		temp := current.Val * (len(heights) - current.Pos)
+		if maxVal < temp {
 			maxVal = temp
 		}
-		pStack.Pop()
+		current = stack.Pop()
+
 	}
 
 	return maxVal
+
 }
 
-type PosValStack struct {
-	values []PosVal
+type Stack struct {
+	s []PosVal
 }
 
-func (p *PosValStack) Push(v PosVal) {
-	p.values = append(p.values, v)
+func (s *Stack) Len() int {
+	return len(s.s)
 }
 
-func (p *PosValStack) Len() int {
-	return len(p.values)
+func (s *Stack) Push(v PosVal) {
+	s.s = append(s.s, v)
 }
-
-func (p *PosValStack) Peek() *PosVal {
-	if p.Len() <= 0 {
-		return nil
+func (s *Stack) Pop() PosVal {
+	if s.Len() == 0 {
+		return PosVal{-1, -1}
 	}
-	return &p.values[p.Len()-1]
+	val := s.s[s.Len()-1]
+	s.s = s.s[:s.Len()-1]
+	return val
 }
 
-func (p *PosValStack) Pop() {
-	p.values = p.values[:p.Len()-1]
+func (s *Stack) Peek() PosVal {
+	if s.Len() == 0 {
+		return PosVal{-1, -1}
+	}
+	return s.s[s.Len()-1]
 }
