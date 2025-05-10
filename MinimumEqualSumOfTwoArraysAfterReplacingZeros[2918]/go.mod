@@ -1,0 +1,3 @@
+module minimumEqualSequenceOfTwoArraysAfterReplacingZeros
+
+go 1.24.2
