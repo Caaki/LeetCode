@@ -1,6 +1,11 @@
 package main
 
-func main() {}
+import "fmt"
+
+func main() {
+
+	fmt.Print(getLongestSubsequence([]string{"f", "o", "l", "i", "v", "r", "a", "q", "z", "g", "p", "h", "n", "c", "y", "u", "e", "b", "k", "t", "w", "m", "x", "j", "s", "d"}, []int{0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0}))
+}
 
 func getLongestSubsequence(words []string, groups []int) []string {
 
