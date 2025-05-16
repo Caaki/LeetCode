@@ -1,6 +1,12 @@
 package main
 
-func main() {}
+import "fmt"
+
+func main() {
+
+	fmt.Print(getWordsInLongestSubsequence([]string{"bc", "cbb", "cc", "bbc", "bdc", "ac", "dc", "add", "db", "cb", "cd", "cdb", "bb"}, []int{13, 8, 1, 8, 5, 6, 3, 10, 5, 11, 7, 9, 12}))
+
+}
 
 func getWordsInLongestSubsequence(words []string, groups []int) []string {
 
@@ -15,14 +21,18 @@ func getWordsInLongestSubsequence(words []string, groups []int) []string {
 	mx := 1
 	result := dp[0]
 
-	for j := 1; j < n; j++ {
-		for i := 0; i < j; i++ {
+	for i := 1; i < n; i++ {
+		for j := 0; j < i; j++ {
 
-			if groups[i] != groups[j] && len(words[i]) == len(words[j]) && humming(words[i], words[j]) && len(dp[j]) < len(dp[i])+1 {
-				dp[j] = append(dp[i], words[j])
-				if len(dp[j]) > mx {
-					mx = len(dp[j])
-					result = dp[j]
+			if groups[i] != groups[j] && len(words[i]) == len(words[j]) && humming(words[i], words[j]) &&
+				len(dp[i]) < len(dp[j])+1 {
+				temp := make([]string, len(dp[j])+1)
+				copy(temp, dp[j])
+				temp[len(dp[j])] = words[i]
+				dp[i] = temp
+				if len(dp[i]) > mx {
+					mx = len(dp[i])
+					result = dp[i]
 				}
 			}
 		}
