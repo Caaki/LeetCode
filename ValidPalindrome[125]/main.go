@@ -6,8 +6,7 @@ import "fmt"
 // A-Z = 65 - 90
 // 0-9 = 48 - 57
 func main() {
-	isPalindrome("aAzZ")
-	fmt.Print(int('a'), int('A')+32, int(97-65))
+	fmt.Println(isPalindrome("A man, a plan, a canal: Panama"))
 }
 
 func isPalindrome(s string) bool {
