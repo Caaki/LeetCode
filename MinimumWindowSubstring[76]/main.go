@@ -1,5 +1,11 @@
 package main
 
+import "fmt"
+
+func main() {
+	fmt.Println(minWindow("ADOBECODEBANC", "ABC"))
+}
+
 func minWindow(s string, t string) string {
 
 	n := len(s)
