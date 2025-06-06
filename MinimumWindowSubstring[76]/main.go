@@ -11,11 +11,11 @@ func minWindow(s string, t string) string {
 	}
 
 	caracters := make(map[byte]int, 0)
-	sum := 0
 	for i, _ := range t {
 		caracters[t[i]]++
-		sum++
 	}
+
+	sum := len(caracters)
 
 	needed := make(map[byte]int, 0)
 	for k, _ := range caracters {
@@ -31,18 +31,18 @@ func minWindow(s string, t string) string {
 			if r-l < len(returnVal) {
 				returnVal = s[l:r]
 			}
-			if v, ok := needed[s[l]]; ok {
-				if v <= caracters[s[l]] {
+			if _, ok := needed[s[l]]; ok {
+				needed[s[l]]--
+				if needed[s[l]] < caracters[s[l]] {
 					count--
 				}
-				needed[s[l]]--
 			}
 			l++
 			continue
 		}
-		if v, ok := needed[s[r]]; ok {
+		if _, ok := needed[s[r]]; ok {
 			needed[s[r]]++
-			if v < caracters[s[r]] {
+			if needed[s[r]] == caracters[s[r]] {
 				count++
 			}
 		}
