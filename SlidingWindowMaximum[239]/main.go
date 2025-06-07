@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"math"
 )
 
@@ -30,6 +29,7 @@ func maxSlidingWindow(nums []int, k int) []int {
 	for ; r < len(nums); r++ {
 		values[nums[r]]++
 		if nums[r] > maxVal {
+			values = map[int]int{nums[r]: values[nums[r]]}
 			maxVal = nums[r]
 			returnArr = append(returnArr, maxVal)
 			values[nums[l]]--
