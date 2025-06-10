@@ -16,14 +16,14 @@ func maxSlidingWindow(nums []int, k int) []int {
 		for len(deque) > 0 && nums[deque[len(deque)-1]] < nums[r] {
 			deque = deque[:len(deque)-1]
 		}
-		deque = append(deque, r)
+		deque[len(deque)-1] = nums[r]
 
 		if l > deque[0] {
 			deque = deque[1:]
 		}
 
 		if (r + 1) >= k {
-			returnVal = append(returnVal, nums[deque[0]])
+			returnVal = append(returnVal, deque[0])
 			l++
 		}
 		r++
