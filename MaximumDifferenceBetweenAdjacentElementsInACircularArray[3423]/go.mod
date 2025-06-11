@@ -1,0 +1,3 @@
+module maximumDifferenceBetweenAdjacentElementsInCircularArray
+
+go 1.24.2
