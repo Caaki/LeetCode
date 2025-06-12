@@ -1,8 +1,13 @@
 package main
 
-import "math"
+import (
+	"fmt"
+	"math"
+)
 
-func main() {}
+func main() {
+	fmt.Print(maxAdjacentDistance([]int{1, 2, -1, 2, -10, -4, 24, 25, -10}))
+}
 
 func maxAdjacentDistance(nums []int) int {
 	maximun := math.MinInt
