@@ -15,25 +15,24 @@ func isBalanced(root *TreeNode)bool{
 	return balanced
 }
 
-func dfs(root *TreeNode)(bool,int){
-	if root == nil {
-		return true,0
+func dfs (root *TreeNode) (bool,int){
+	if root==nil{
+		return true, 0
 	}
 	
-	leftCheck,leftVal := dfs(root.Left)
-	rightCheck,rightVal := dfs(root.Right)
+	leftC,leftV := dfs(root.Left)
+	rightC,rightV := dfs(root.Right)
 
-	if leftCheck==false || rightCheck == false{
-		return false,-1
-	}
-
-	if rightVal < leftVal{
-		rightVal,leftVal = leftVal,rightVal
-	}
-	if rightVal-leftVal >=2{
+	if leftC ==false || rightC == false{
 		return false,-1
 	}
 	
-	return true,1+rightVal
+	if rightV<leftV{
+		rightV,leftV = leftV,rightV
+	}
+	
+	if rightV - leftV >=2{
+		return false,-1
+	}
+	return true , 1+rightV
 }
-
