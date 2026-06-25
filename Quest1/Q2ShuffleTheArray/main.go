@@ -12,15 +12,11 @@ func main() {
 	fmt.Println(shuffle(nusm, n))
 }
 
-func shuffle(nums []int, n int) []int {
-	answer := make([]int, n*2)
-	for q, i, j := 0, 0, n; i < n; {
-		answer[q] = nums[i]
-		q++
-		answer[q] = nums[j]
-		i++
-		j++
-		q++
-	}
-	return answer
+func shuffle(nums []int, n int) []int{
+		ans := make([]int, len(nums))
+		for j,i:=0,0 ; j<n;j,i=j+1,i+2{
+			ans[i]=nums[j]
+			ans[i+1]=nums[j+n]
+		}
+		return ans
 }
