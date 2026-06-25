@@ -10,21 +10,20 @@ func main() {
 	fmt.Println(findMaxConsecutiveOnes([]int{1, 0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1}))
 }
 
-func findMaxConsecutiveOnes(nums []int) int {
-	count := 0
-	temp := 0
-	for _, v := range nums {
-		if v == 1 {
-			temp++
-		} else {
-			if count < temp {
-				count = temp
+func findMaxConsecutiveOnes(nums []int) int{
+	m,t :=0,0
+	for _,v := range nums{
+		if v == 1{
+			t++
+		}else{
+			if t > m{
+				m=t
 			}
-			temp = 0
+			t=0
 		}
 	}
-	if count < temp {
-		return temp
+	if m>t{
+		return m
 	}
-	return count
+	return t
 }
