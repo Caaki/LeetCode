@@ -11,17 +11,11 @@ Return the array ans.
 */
 
 func main() {
-	values := []int{1, 2, 3}
-	fmt.Println(getConcatenation(values))
 }
 
-func getConcatenation(nums []int) []int {
-	n := len(nums)
-	ans := make([]int, 0, n*2)
-
-	for i := 0; i < n*2; i++ {
-		ans = append(ans, nums[i%n])
-	}
-
+func getConcatenation(nums []int) []int{
+	ans := make([]int,0)
+	ans = append(ans, nums...)
+	ans = append(ans, nums...)
 	return ans
 }
