@@ -2,8 +2,6 @@ package main
 
 import (
 	"fmt"
-	"maps"
-	"slices"
 	"sort"
 )
 
@@ -11,33 +9,42 @@ func main (){
 	fmt.Println(findErrorNums([]int{1,2,2,4}))
 }
 
-func findErrorNums(nums []int) []int {
-	
-	duped := make(map[int]bool,0)
-	start :=1
-	sort.Ints(nums)
-	toReturn := make(map[int]bool,0)
+func findErrorNums(nums []int) []int{
 
-	for i:=0; i < len(nums)|| start > len(nums); i++  {
-		fmt.Println(nums[i], start)
-		if _,ok := duped[nums[i]]; ok {
-			fmt.Println("first")
-			toReturn[nums[i]]=true
+	if len(nums) ==2{
+		if nums[0]==1{
+			return []int{1,2}
+		}else{
+			return []int{2,1}
 		}
-		duped[nums[i]]=true
-		if start < nums[i] {
-			fmt.Println("second")
-			toReturn[start]=true
-			start++
+	}
+
+	sort.Ints(nums)
+	m:=0
+	e:=0
+	c,i:=1,0
+	for ; i<len(nums);i++{
+		if e != 0 && m != 0{
+			return []int{e,m}
+		}
+		if c == nums[i]{
+			c++
+			continue
+		}
+		if c < nums[i]{
+			m = c
+			c++
 			i--
 			continue
 		}
-		if start!=nums[i]{
-			fmt.Println("third")
-			toReturn[start]=true
+		if c > nums[i]{
+			e = nums[i]
 		}
-		start++
 	}
-	values :=slices.Collect(maps.Keys(toReturn))
-	return values
+	if m == 0{
+		m = c
+	}
+
+	return []int{e,m}
 }
+
