@@ -21,17 +21,13 @@ func smallerNumbersThanCurrent(nums []int) []int {
 		nCount[v]++
 	}
 	
-	rValues := make([]int,len(nums))
-	
-	for i,cur := range nums{
-		count := 0
-		for k,v :=range nCount{
-			if cur > k{
-				cur+= v
-			}
-		}
-		rValues[i] = count
+	prefix := make([]int, 100)
+	for i := 1 ; i <= 100; i++{
+		prefix[i] = prefix[i-1] + nCount[i-1]
+	}
+	for i,_ := range nums{
+		nums[i] = prefix[nums[i]]
 	}
 
-	return rValues
+	return nums
 }
